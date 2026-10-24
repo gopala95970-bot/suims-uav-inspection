@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: suims-website
+    runtime: python
+    plan: free
+    buildCommand: echo "No build step - standard library only"
+    startCommand: python backend/main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3

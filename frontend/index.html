@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUIMS — Mission Control</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="noise"></div>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">S</span><div><b>SUIMS</b><small>SMART UAV INSPECTION & MONITORING</small></div></div>
+  <nav>
+    <a href="#overview">Overview</a><a href="#mission">Mission</a><a href="#risk">Risk AI</a><a href="#safety">Safety</a><a href="#history">History</a>
+  </nav>
+  <div class="live"><i></i> SYSTEM ONLINE</div>
+</header>
+
+<main>
+<section class="hero" id="overview">
+  <div class="hero-copy">
+    <div class="eyebrow">AUTONOMOUS INFRASTRUCTURE INTELLIGENCE</div>
+    <h1>Inspect smarter.<br><span>Act safer.</span></h1>
+    <p>Risk-aware UAV inspection for power infrastructure with deterministic safety arbitration, explainable AI decisions and adaptive mission planning.</p>
+    <div class="hero-actions">
+      <button class="btn primary" onclick="startMission()">▶ START MISSION</button>
+      <button class="btn ghost" onclick="runScenario('normal')">RUN DEMO</button>
+    </div>
+    <div class="principles"><span>SAFETY &gt; BATTERY &gt; MISSION &gt; NAVIGATION</span><span>SIMULATION MODE</span></div>
+  </div>
+  <div class="orbital">
+    <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+    <div class="uav">✦</div><div class="scan-line"></div>
+    <div class="orbit-label l1">UAV-01</div><div class="orbit-label l2">T04 / HIGH RISK</div>
+  </div>
+</section>
+
+<section class="dashboard-grid" id="mission">
+  <article class="panel map-panel wide">
+    <div class="panel-head"><div><span class="kicker">LIVE MISSION</span><h2>Inspection Corridor</h2></div><span id="missionState" class="badge blue">IDLE</span></div>
+    <div class="map">
+      <div class="gridmap"></div>
+      <div class="route"></div>
+      <div class="asset a1">T01</div><div class="asset a2">T02</div><div class="asset a4">T04</div><div class="asset a5">T05</div>
+      <div class="uav-dot"></div><div class="map-coords">30.2458° N&nbsp;&nbsp;75.8421° E</div>
+    </div>
+  </article>
+
+  <article class="panel telemetry">
+    <div class="panel-head"><div><span class="kicker">UAV TELEMETRY</span><h2>UAV-01</h2></div><span class="badge green">CONNECTED</span></div>
+    <div class="tele-grid">
+      <div><small>BATTERY</small><strong id="battery">—</strong><em>%</em></div>
+      <div><small>ALTITUDE</small><strong id="altitude">—</strong><em>m</em></div>
+      <div><small>SPEED</small><strong id="speed">—</strong><em>m/s</em></div>
+      <div><small>SATELLITES</small><strong id="sats">—</strong><em>GPS</em></div>
+    </div>
+    <div class="meter"><span id="batteryBar"></span></div>
+    <div class="tele-footer"><span>GPS <b id="gps">OK</b></span><span>LINK <b id="link">OK</b></span><span>WIND <b id="wind">—</b></span></div>
+  </article>
+
+  <article class="panel decision" id="risk">
+    <div class="panel-head"><div><span class="kicker">EXPLAINABLE DECISION</span><h2 id="finalAction">RE-INSPECT</h2></div><span id="priority" class="badge purple">MISSION</span></div>
+    <div class="decision-reason" id="decisionReason">Awaiting mission telemetry…</div>
+    <div class="decision-row"><span>AI PROPOSAL</span><b id="proposal">RE-INSPECT</b></div>
+    <div class="decision-row"><span>FINAL ACTION</span><b id="finalAction2">RE-INSPECT</b></div>
+    <div class="decision-row"><span>AUTHORITY</span><b>SAFETY ARBITER</b></div>
+  </article>
+
+  <article class="panel risk-card">
+    <div class="panel-head"><div><span class="kicker">RISK INTELLIGENCE</span><h2>Asset T04</h2></div><span id="riskLevel" class="badge red">HIGH</span></div>
+    <div class="score"><strong id="riskScore">—</strong><span>/100</span></div>
+    <div class="risk-bar"><span id="riskBar"></span></div>
+    <p id="riskExplain">Insulator condition analysis pending.</p>
+    <div class="chips"><span>INSULATOR CRACK</span><span>94% CONF.</span><span>RECURRING</span></div>
+  </article>
+
+  <article class="panel safety-panel" id="safety">
+    <div class="panel-head"><div><span class="kicker">SAFETY ARBITRATION</span><h2>Authority Layer</h2></div><span id="safetyBadge" class="badge green">CLEAR</span></div>
+    <div class="safety-display">
+      <div class="safety-icon">⌁</div>
+      <div><small>SAFETY STATUS</small><strong id="safetyStatus">NORMAL</strong><p id="safetyReason">No safety constraint is blocking mission intent.</p></div>
+    </div>
+    <div class="priority-ladder"><b>01 SAFETY</b><b>02 BATTERY</b><b>03 MISSION</b><b>04 NAVIGATION</b></div>
+  </article>
+
+  <article class="panel controls">
+    <div class="panel-head"><div><span class="kicker">SCENARIO CONTROLS</span><h2>Failure Injection</h2></div><span class="badge amber">JUDGE MODE</span></div>
+    <div class="control-grid">
+      <button onclick="setFailure('high_wind',true)">🌪 HIGH WIND</button>
+      <button onclick="setFailure('gps_loss',true)">⌁ GPS LOSS</button>
+      <button onclick="setFailure('telemetry_loss',true)">⇄ LINK LOSS</button>
+      <button onclick="setFailure('low_battery',true)">▣ LOW BATTERY</button>
+      <button class="reset" onclick="resetSystem()">↺ RESET</button>
+      <button class="tick" onclick="tick()">⟳ NEXT CYCLE</button>
+    </div>
+  </article>
+</section>
+
+<section class="architecture" id="architecture">
+  <div class="section-title"><span class="kicker">CLOSED-LOOP INTELLIGENCE</span><h2>Inspect → Decide → Act → Learn</h2></div>
+  <div class="flow">
+    <div><b>01</b><strong>INSPECT</strong><small>Telemetry + camera + asset context</small></div><i>→</i>
+    <div><b>02</b><strong>DETECT</strong><small>Defect + confidence + uncertainty</small></div><i>→</i>
+    <div><b>03</b><strong>ASSESS</strong><small>Explainable risk score</small></div><i>→</i>
+    <div><b>04</b><strong>DECIDE</strong><small>Adaptive inspection priority</small></div><i>→</i>
+    <div><b>05</b><strong>ARBITRATE</strong><small>Deterministic safety gate</small></div><i>→</i>
+    <div><b>06</b><strong>ACT</strong><small>Mission command + history</small></div>
+  </div>
+</section>
+
+<section class="tables" id="history">
+  <article class="panel table-panel">
+    <div class="panel-head"><div><span class="kicker">ASSET REGISTER</span><h2>Inspection Queue</h2></div></div>
+    <table><thead><tr><th>ASSET</th><th>TYPE</th><th>STATUS</th><th>RISK</th><th>DISTANCE</th></tr></thead><tbody id="assets"></tbody></table>
+  </article>
+  <article class="panel table-panel">
+    <div class="panel-head"><div><span class="kicker">EVENT STREAM</span><h2>System Timeline</h2></div></div>
+    <div id="events" class="events"></div>
+  </article>
+</section>
+
+<section class="footer-quote">
+  <div class="quote-mark">“</div>
+  <h2>Safety enforced by architecture,<br><span>not by AI judgment.</span></h2>
+  <p>SUIMS prototype • Software simulation • Transparent implementation status</p>
+</section>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
